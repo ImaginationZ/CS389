@@ -1,0 +1,122 @@
+\documentclass[12pt]{article}
+\usepackage{amsfonts,amsmath,amssymb,graphicx,url,tikz,amsthm}
+\usetikzlibrary{arrows,automata}
+
+% Old Stuff
+%%\oddsidemargin=0.15in
+%%\evensidemargin=0.15in
+%%\topmargin=-.5in
+%%\textheight=9in
+%%\textwidth=6.25in
+
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textwidth}{6.25in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{8.5in}
+
+\newcommand{\heading}[5]{
+   \renewcommand{\thepage}{#1-\arabic{page}}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{
+    \hbox to 6.2in { {\bf MS205 Automata Theory}
+     	 \hfill #2 }
+       \vspace{4mm}
+       \hbox to 6.2in { {\Large \hfill #5  \hfill} }
+       \vspace{2mm}
+       \hbox to 6.2in { {\it #3 \hfill #4} }
+      }
+   }
+   \end{center}
+   \vspace*{4mm}
+}
+
+\newcommand{\handout}[3]{\heading{#1}{#2}{Huang Zen 5120309027}{}{#3}}
+
+\setlength{\parindent}{0in}
+\setlength{\parskip}{0.1in}
+
+\begin{document}
+\handout{1}{Dec 14, 2013}{Problem Set 2}
+
+\paragraph{Problem 1} 
+
+Let $B=\{x \in \Sigma^* | |x|<maxlength(h(\Sigma)) \}$.
+We construct an NFA $M_h=(Q_h, \Sigma, \delta_h, q_{0h}, F_h)$ such that
+$$
+\begin{cases}
+Q_h = Q \times B \\
+\delta_h((q,b),a)=
+\begin{cases}
+(q,ba) \mbox{if $ba \in B$} \\
+(\delta(q,c), \epsilon) \mbox{$\forall h(c)=ba$ if $ba \in h(\Sigma)$} \\
+\end{cases}\\
+F_h={(q,\epsilon) | q \in F}
+\end{cases}
+$$
+\bigskip
+
+\paragraph{Problem 2} 
+
+$$
+h^{-1}(L) = (ba)^*
+$$
+\begin{proof}
+It's not hard to see $h((ba)^*) = (1001)^* \subset L$.
+We claim $\forall x \in (a+b)^* - (ba)^*, h(x) \not\in L$.
+Such $x$ must satisfy at least one of the following properties:
+\begin{itemize}
+\item A prefix $a$.
+\item A sufix $b$.
+\item An infix $aa$ or $bb$.
+\end{itemize}
+Any of such letters would lead to a consecutive individual $0$, which can't be in $L$.
+\end{proof}
+\bigskip
+
+\paragraph{Problem 3}
+Suppose set of all strings of $0$'s and $1$'s of length $k$,
+with an odd number of $0$'s and an even number of $1$'s end at state $C$,
+with an even number of $0$'s and an odd number of $1$'s end at state $B$,
+with an even number of $0$'s and an even number of $1$'s end at state $A$,
+and with an odd number of $0$'s and an odd number of $1$'s is accepted by the machine.
+\bigskip
+
+\paragraph{Problem 4}
+
+For each question,
+suppose the language is regular,
+then by Pumping Lemma $\exists n \in \mathbb{N}, \forall x \in L, |x|>n, \exists u,v\not=\epsilon,w, |uv|<n, s.t. uv^iw \in L$
+
+\begin{itemize}
+\item[1.]
+Let $x=scs^R \in L$ and $|x|=2n+1$.
+By Pumping Lemma there exists $x=uvw$ satisfying.
+Clearly since $|uv|<n$,
+$v$ is an infix of $w$.
+We have $y=uw=(s / v)cs^R \in L$,
+which is a contradiction since letter $c$ is no longer at the middle of the string.
+\item[2.]
+Let $x=a^nb^nc^n$,
+$x \in L$ and hence $x=uvw$ satisfies pumping lemma.
+Clearly since $|uv|<n$, $v \in a^+$,
+by Pumping Lemma we have $y=uw=(a^n-v)b^nc^n \in L$,
+this contradicts $i_a \geq j_b \geq k_c$. 
+\item[3.]
+Let $x=0^p$, $p>n$ and p is a prime.
+Hence there exists some $x=uvw$ satisfies pumping lemma.
+Clearly $v=0^t$, $0<t<n$.
+By Pumping Lemma we have $y=uv^{p-t}w=0^{(t+1)(p-t)} \in L$,
+which is a contradiction since $(t+1)(p-t)$ is not prime.
+\end{itemize}
+\end{document}
+
+
+
+
+
+
+
+
